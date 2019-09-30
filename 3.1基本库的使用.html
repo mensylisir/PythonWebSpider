@@ -25,9 +25,22 @@
 <h2 id="-">&#x57FA;&#x672C;&#x5E93;&#x7684;&#x4F7F;&#x7528;</h2>
 <p>3.1 urllib</p>
 <ul>
-<li>request<ul>
-<li>urlopen()<ul>
-<li>ll</li>
+<li><p>request</p>
+<ul>
+<li>urlopen()<pre><code>import urllib.request
+response = urllib.request.urlopen(&apos;http://www.python.org&apos;)
+print(response.read().decode(&apos;utf-8&apos;))
+print(type(response))
+print(response.status)
+print(response.getheaders())
+print(response.getheader(&apos;Server&apos;))</code></pre></li>
+<li><p>urllib.request.urlopen(url, data=None, [timeout, ], cafile=None, capath=None, cadefault=False, context=None)</p>
+<ul>
+<li><p>data</p>
+</li>
+<li><p>timeout</p>
+</li>
+<li>&#x5176;&#x4ED6;&#x53C2;&#x6570;</li>
 </ul>
 </li>
 </ul>
