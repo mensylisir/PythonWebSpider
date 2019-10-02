@@ -22,8 +22,8 @@
 </style>
 </head>
 <body><div id="readme" class="container"><article class="markdown-body entry-content"><h1 id="python3-">Python3&#x7F51;&#x7EDC;&#x722C;&#x866B;&#x8BFE;&#x7A0B;</h1>
-<h2 id="-">&#x57FA;&#x672C;&#x5E93;&#x7684;&#x4F7F;&#x7528;</h2>
-<p>3.1 urllib</p>
+<h2 id="urllib-">urllib&#x5E93;</h2>
+<p>3.1 <a href="https:://docs.python.org/3/library/urllib.html">urllib</a></p>
 <ul>
 <li><p>request</p>
 <ul>
@@ -33,21 +33,181 @@ print(response.read().decode(&apos;utf-8&apos;))
 print(type(response))
 print(response.status)
 print(response.getheaders())
-print(response.getheader(&apos;Server&apos;))</code></pre></li>
+print(response.getheader(&apos;Server&apos;))</code></pre><ul>
+<li>&#x8FD4;&#x56DE;&#x503C;HTTPResponse&#x7C7B;&#x578B;<ul>
+<li>read()</li>
+<li>readinto()</li>
+<li>getheader(name)</li>
+<li>getheaders()</li>
+<li>fileno()</li>
+<li>msg</li>
+<li>version</li>
+<li>status</li>
+<li>reason</li>
+<li>debuglevel</li>
+<li>closed</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p>urllib.request.urlopen(url, data=None, [timeout, ], cafile=None, capath=None, cadefault=False, context=None)</p>
 <ul>
-<li><p>data</p>
-</li>
-<li><p>timeout</p>
-</li>
+<li>data<pre><code>import urllib.request
+import urllib.parse
+param = {&apos;world&apos;: &apos;hello&apos;}
+data = bytes(urllib.parse.urlencode(param), encoding=&apos;utf8&apos;)
+response = urllib.request.urlopen(&apos;http://httpbin.org/post&apos;, data=data)
+print(response.read())</code></pre></li>
+<li>timeout
+<code>`</code>
+import urllib.request
+import urllib.parse</li>
+</ul>
+<p>response = urllib.request.urlopen(&apos;<a href="http://httpbin.org/post&apos;">http://httpbin.org/post&apos;</a>, timeout=1)
+print(response.read())
+<code>`</code></p>
+<ul>
 <li>&#x5176;&#x4ED6;&#x53C2;&#x6570;</li>
 </ul>
 </li>
+<li>Request<ul>
+<li>url</li>
+<li>data</li>
+<li>headers/add_header()<ul>
+<li>python-urllib</li>
 </ul>
 </li>
-<li>error</li>
-<li>parse</li>
-<li>robotparser</li>
+<li>orgin_req_host</li>
+<li>unverifiable</li>
+<li>method
+<code>`</code>
+import urllib.request
+import urllib.parse</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>  url = &apos;http://httpbin.org/post&apos;
+
+  headers = {
+      &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;,
+      &apos;Host&apos;: &apos;httpbin.org&apos;
+  }
+
+  param = {
+      &quot;name&quot;: &apos;Germey&apos;
+  }
+
+  data = bytes(urllib.parse.urlencode(param), encoding=&apos;utf8&apos;)
+  req = urllib.request.Request(url, data=data, headers=headers, method=&apos;POST&apos;)
+  response = urllib.request.urlopen(req)
+  print(response.read().decode(&apos;utf-8&apos;))
+  ```
+- Handlers
+  + BaseHandler
+    - &#x6240;&#x6709;&#x5904;&#x7406;&#x5668;&#x7684;&#x7236;&#x7C7B;
+    - default_open()
+    - protocol_request()
+    - ....
+    - HTTPDefaultErrorHandler &#x5904;&#x7406;&#x5404;&#x79CD;HTTP&#x54CD;&#x5E94;&#x9519;&#x8BEF;
+    - HTTPRedirectHandler &#x5904;&#x7406;&#x91CD;&#x5B9A;&#x5411;
+    - HTTPCookieProcessor &#x5904;&#x7406;cookie
+    - ProxyHandler &#x8BBE;&#x7F6E;&#x4EE3;&#x7406;&#x7684;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;&#x7A7A;
+    - HTTPBasicAuthHandler &#x7BA1;&#x7406;&#x8BA4;&#x8BC1;
+    - [&#x5B98;&#x65B9;&#x6587;&#x6863;](https://docs.python.org/3/library/urllib.request.html#urllib.request.BaseHandler)
+- OpenerDirector
+  ```
+  from urllib.request import HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler, build_opener
+  from  urllib.error import URLError
+
+  url = &quot;http://localhost:8080&quot;
+  username = &apos;user&apos;
+  password = &apos;passwd&apos;
+
+  p = HTTPPasswordMgrWithDefaultRealm()
+  p.add_password(None, url, username, password)
+  auth_handler = HTTPBasicAuthHandler(p)
+  opener = build_opener(auth_handler)
+  try:
+      result = opener.open(url)
+      response = result.read(.decode(&apos;utf8&apos;))
+      print(response)
+  except URLError as e:
+      print(e)
+  ```
+  + &#x4EE3;&#x7406;
+  ```
+  from urllib.error import URLError
+  from urllib.request import ProxyHandler, build_opener
+
+
+  proxy_handler = ProxyHandler({
+      &apos;http&apos;:&apos;http://127.0.0.1:9999&apos;,
+      &apos;https&apos;:&apos;https://127.0.0.1:9999&apos;
+  })
+  opener = build_opener(proxy_handler)
+  try:
+      response = opener.open(&apos;http://www.baidu.com&apos;)
+      print(response.read().decode(&apos;utf-8&apos;))
+  except URLError as e:
+      print(e)
+  ```
+  + Cookie
+  ```
+  import http.cookiejar
+  import urllib.request
+  cookie = http.cookiejar.CookieJar()
+  handler = urllib.request.HTTPCookieProcessor(cookie)
+  opener = urllib.request.build_opener(handler)
+  response = opener.open(&apos;http://www.baidu.com&apos;)
+  ```</code></pre><ul>
+<li>error<ul>
+<li>URLError(OSError)<pre><code>from urllib import request, error
+try:
+  response = request.urlopen(&apos;https://cuiqingcai.com/index.html&apos;)
+except error.URLError as e:
+  print(e.reason)</code></pre></li>
+<li>HTTPError<pre><code>from urllib import request, error
+try:
+  response = request.urlopen(&apos;https://cuiqingcai.com/index.html&apos;)
+except error.HTTPError as e:
+  print(e.reason, e.code, e.headers)</code></pre></li>
+</ul>
+</li>
+<li><p>parse</p>
+<ul>
+<li><p>urlparser()</p>
+<pre><code>from urllib.request import urlparse
+result = urlparse(&apos;http://www.baidu.com/index.html;user?id=5#commet&apos;)
+print(type(result), result)</code></pre><ul>
+<li>urlstring</li>
+<li>scheme</li>
+<li>allow_fragments</li>
+</ul>
+</li>
+<li>urlunparse()<pre><code>from urllib.request import urlunparse
+data = [&apos;http&apos;, &apos;www.baidu.com&apos;, &apos;index.html&apos;, &apos;user&apos;, &apos;id=6&apos;, &apos;comment&apos;]
+print(urlunparse(data))</code></pre></li>
+<li>urlsplit</li>
+<li>urlunsplit</li>
+<li>urljoin</li>
+<li>urlencode</li>
+<li>parse_qs</li>
+<li>parse_qsl</li>
+<li>quote<pre><code>from urllib.request import quote
+keyword = &apos;&#x58C1;&#x7EB8;&apos;
+url = &apos;https://www.baidu.com/s?wd=&apos; + quote(keyword)
+print(url)</code></pre></li>
+<li>unquote  </li>
+</ul>
+</li>
+<li>robotparser<ul>
+<li>Robot&#x534F;&#x8BAE;(robots.txt)<pre><code>User-Agent: *
+Disallow: /
+Allow: /public/</code></pre></li>
+</ul>
+</li>
 </ul>
 </article></div><div style="background-color: #b4b2b2;width: 50px;height:50px;line-height: 50px;text-align: center;position: fixed;bottom: 10px;right: 10px;padding-top:5px;" onclick="document.documentElement.scrollTop = document.body.scrollTop =0;">
   <svg t="1533629773982" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1035" xlink="http://www.w3.org/1999/xlink" width="40" height="40"><defs><style type="text/css">@font-face { font-family: uc-nexus-iconfont; src: url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.woff") format("woff"), url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.ttf") format("truetype"); }
