@@ -22,180 +22,54 @@
 </style>
 </head>
 <body><div id="readme" class="container"><article class="markdown-body entry-content"><h1 id="python3-">Python3&#x7F51;&#x7EDC;&#x722C;&#x866B;&#x8BFE;&#x7A0B;</h1>
-<h2 id="requests">requests</h2>
-<p>3.2 &#x57FA;&#x672C;&#x7528;&#x6CD5;</p>
-<ul>
-<li>&#x51C6;&#x5907;&#x5DE5;&#x4F5C;<pre><code>pip install requests</code></pre></li>
-<li>&#x7B80;&#x5355;&#x7528;&#x6CD5;<pre><code>import requests
-response = requests.get(&apos;https://www.baidu.com&apos;)
-print(type(response))
-print(response.status_code)
-print(type(response.text))
-print(response.text)
-print(response.cookies)
-requests.post(&apos;http://httpbin.org/post&apos;)
-requests.put(&apos;http://httpbin.org/put&apos;)
-requests.delete(&apos;http://httpbin.org/delete&apos;)
-requests.head(&apos;http://httpbin.org/head&apos;)
-requests.options(&apos;http://httpbin.org/options&apos;)</code></pre></li>
-<li><p>GET&#x8BF7;&#x6C42;
-<code>`</code>
-import requests
-response = requests.get(&apos;<a href="http://httpbin.org/get&apos;">http://httpbin.org/get&apos;</a>)
-print(response.text)</p>
-<p>import requests
-response = requests.get(&apos;<a href="http://httpbin.org/get?name=germey&amp;age=22&apos;">http://httpbin.org/get?name=germey&amp;age=22&apos;</a>)
-print(response.text)</p>
-<p>import requests
-data = {
-  &apos;name&apos;: &apos;germey&apos;,
-  &apos;age&apos;: 22
-}
-response = requests.get(&apos;<a href="http://httpbin.org/get&apos;">http://httpbin.org/get&apos;</a>, params=data)
-print(response.text)</p>
-</li>
-</ul>
-<p>  import requests
-  data = {
-      &apos;name&apos;: &apos;germey&apos;,
-      &apos;age&apos;: 22
-  }
-  response = requests.get(&apos;<a href="http://httpbin.org/get&apos;">http://httpbin.org/get&apos;</a>, params=data)
-  print(type(response.text))
-  print(response.json())
-  print(type(response.json()))</p>
-<pre><code>    - &#x5982;&#x679C;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E0D;&#x662F;json&#xFF0C;&#x8C03;&#x7528;json()&#x65B9;&#x6CD5;&#x4F1A;&#x62A5;&#x9519;&#xFF0C;&#x62A5;json&#x89E3;&#x7801;&#x9519;&#x8BEF;
-  + &#x6293;&#x53D6;&#x7F51;&#x9875;
-    - &#x6293;&#x53D6;&#x5B57;&#x7B26;&#x4E32;&#x6570;&#x636E;</code></pre><pre><code>import requests
+<h2 id="-">&#x6293;&#x53D6;&#x5B9E;&#x4F8B;</h2>
+<p><a href="https://github.com/mensylisir/PythonWebSpider">&#x8BE6;&#x7EC6;&#x4EE3;&#x7801;</a></p>
+<pre><code>import requests
 import re
+import json
+import time
 
-headers = {
-    &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;
-}
-
-response = requests.get(&apos;https://www.zhihu.com/explore&apos;, headers=headers)
-print(response.text)
-pattern = re.compile(r&apos;a class=\&quot;ExploreSpecialCard-contentTitle\&quot;.*?&gt;(.*?)&lt;/a&gt;&apos;, re.S)
-resut = re.findall(pattern, response.text)
-print(resut)
-```
-- &#x6293;&#x53D6;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;
-```
-import requests
-
-response = requests.get(&apos;https://github.com/favicon.ico&apos;)
-with open(&apos;favicon.ico&apos;, &apos;wb&apos;) as f:
-    f.write(response.content)
-
-```
-- &#x6DFB;&#x52A0;headers
-```
-import requests
+def crawl_page(url):
+    headers = {
+        &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.text
+    return None
 
 
-headers = {
-&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;
-}
+def html_parser(content):
+    pattern = re.compile(&apos;&lt;dd&gt;.*?board-index.*?&gt;(.*?)&lt;/i&gt;.*?data-src=&quot;(.*?)&quot;.*?name.*?a.*?&gt;(.*?)&lt;/a&gt;.*?star.*?&gt;(.*?)&lt;/p&gt;.*?releasetime.*?&gt;(.*?)&lt;/p&gt;.*?integer.*?&gt;(.*?)&lt;/i&gt;.*?fraction.*?&gt;(.*?)&lt;/i&gt;.*?&lt;/dd&gt;&apos;, re.S)
+    items = re.findall(pattern, content)
+    return items
 
-response = requests.get(&apos;https://www.zhihu.com/explore&apos;, headers=headers)
-print(response.text)
-```</code></pre><ul>
-<li><p>POST&#x8BF7;&#x6C42;</p>
-<pre><code>import requests
+def content_formatter(items):
+    for item in items:
+        yield {
+            &apos;index&apos;: item[0],
+            &apos;image&apos;: item[1],
+            &apos;title&apos;: item[2].strip(),
+            &apos;actor&apos;: item[3].strip()[3:] if len(item[3]) &gt; 3 else &apos;&apos;,
+            &apos;time&apos;:  item[4].strip()[5:] if len(item[4]) &gt; 5 else &apos;&apos;,
+            &apos;score&apos;: item[5].strip() + item[6].strip()
+        }
 
-data = {
-  &apos;name&apos;: &apos;germey&apos;,
-  &apos;age&apos;: 22
-}
+def write_to_file(item):
+    with open(&apos;result.txt&apos;, &apos;a&apos;, encoding=&apos;utf-8&apos;) as f:
+        f.write(json.dumps(item, ensure_ascii=False) + &apos;\n&apos;)
 
-response = requests.post(&apos;http://httpbin.org/post&apos;, data=data)
-print(response.text)</code></pre></li>
-<li>&#x54CD;&#x5E94;<pre><code>import requests
-headers = {
-&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;
-}
-response = requests.post(&apos;http://www.zhihu.com/explore&apos;, headers=headers)
-print(response.text)
-print(response.status_code)
-print(response.headers)
-print(type(response.headers))
-print(response.cookies)
-print(type(response.cookies))
-print(response.url)
-print(response.history)</code></pre></li>
-<li>&#x6587;&#x4EF6;&#x4E0A;&#x4F20;<pre><code>import  requests
-file = {
-  &apos;file&apos;: open(&apos;favicon.ico&apos;, &apos;rb&apos;)
-}
-response = requests.post(&apos;http://httpbin.org/post&apos;, files=file)
-print(response.text)</code></pre></li>
-<li><p>Cookie</p>
-<ul>
-<li>&#x83B7;&#x53D6;cookie&#x975E;&#x5E38;&#x5BB9;&#x6613;&#x65B9;&#x4FBF;<pre><code>import  requests
-headers = {
-&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;
-}
-response = requests.get(&apos;https://www.baidu.com&apos;, headers=headers)
-# print(response.cookies)
-for key, value in response.cookies.items():
-  print(key + &apos;=&apos; + value)</code></pre></li>
-<li>&#x8BBE;&#x7F6E;cookie
-<code>`</code>
-import requests</li>
-</ul>
-<p>cookie_text = &apos;<em>zap=a56cfd45-55ce-4b1e-b99c-4f4636cd0cd2; _xsrf=Kjtl4nkLdwZv139IZg0ID8pNemGz7uWh; d</em>c0=&quot;AEAj63ICBxCPTou4Y-qHT9MgPAnKT17u7fs=|1568128310&quot;; q_c1=cb61b550afd94fa3bf76dcca0bad6862|1568128344000|1568128344000; <em>_utmv=51854390.000--|3=entry</em>date=20190910=1; l_cap_id=&quot;ZTEyMjkxNGE2MGY3NDk2YTkwZmQ2MmVjZGQ1ZWEwZjI=|1568563030|66ac9678300870aa6e83180c5250aee899cb7a08&quot;; r_cap_id=&quot;YmFhOWVkMWM1ODQyNDBmMWEyMGE4MjRhZDcwMGY4YWE=|1568563030|7f0b564fd0fdbf0ba14b9e8adb8c10422f83483b&quot;; cap_id=&quot;YzY0ZWU4Zjk5MDEzNDJhYWIzN2Q1YTZmNmM0MWMwZGY=|1568563030|8a01db841c3b81ff6854d3c08e6369e1f7a4c253&quot;; <em><em>utma=51854390.1229907438.1568128343.1568128343.1568563035.2; _</em>utmz=51854390.1568563035.2.2.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; Hm</em>lvt_98beee57fd2ef70ccdd5ca52b9740c49=1569856046,1569922607,1569987852,1569997473; capsion_ticket=&quot;2|1:0|10:1570002915|14:capsion_ticket|44:ZmViMzg3YzVkOGJjNDdhZmE2ZmExMWNjNzg3NmI5MzQ=|46cb42cee6a855485104127345aa1e85f665351b3c9913ea7d12804084ab4f79&quot;; z_c0=&quot;2|1:0|10:1570002953|4:z_c0|92:Mi4xRGJMeURBQUFBQUFBUUNQcmNnSUhFQ2NBQUFDRUFsVk5DZVc3WFFCMnpHQ21BMk1MaXEyUWpTQjVCVExIekM4cUNR|34e193193db12bc56a057369a6cba57629f071426abf09ae95362b807f92ee2c&quot;; Hm_lpvt_98beee57fd2ef70ccdd5ca52b9740c49=1570002954&apos;
-cookies = {}
-for item in cookie_text.split(&apos;; &apos;):</p>
-<pre><code>key, value = item.split(&apos;=&apos;, 1)
-cookies[key] = value</code></pre><p>headers = {</p>
-<pre><code>&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&apos;,
-&apos;Host&apos;: &apos;www.zhihu.com&apos;,</code></pre><p>}
-response = requests.post(&apos;<a href="https://www.zhihu.com/&apos;">https://www.zhihu.com/&apos;</a>, cookies=cookies, headers=headers)
-print(response.text)
-<code>`</code></p>
-</li>
-<li>&#x4F1A;&#x8BDD;&#x7EF4;&#x6301;<pre><code>import requests
-session = requests.Session()
-session.get(&apos;http://httpbin.org/cookies/set/number/123456789&apos;)
-response = session.get(&apos;http://httpbin.org/cookies&apos;)
-print(response.text)</code></pre></li>
-<li>SSL<ul>
-<li>verify=False<pre><code>session.get(&apos;http://httpbin.org/cookies/set/number/123456789&apos;&#xFF0C; verify=False)</code></pre></li>
-<li>&#x6307;&#x5B9A;&#x8BC1;&#x4E66;<pre><code>session.get(&apos;http://httpbin.org/cookies/set/number/123456789&apos;, cert=(&apos;/path/server.crt&apos;, &apos;/path/key&apos;))</code></pre></li>
-</ul>
-</li>
-<li><p>&#x4EE3;&#x7406;</p>
-<pre><code>import requests
-
-proxy = {
-  &apos;http&apos;: &apos;http://127.0.0.1:9999&apos;,
-  &apos;https&apos;: &apos;https://127.0.0.1:9999&apos;,
-}
-
-requests.get(&apos;https://www.baidu.com&apos;, proxies=proxy)</code></pre></li>
-<li>&#x5982;&#x679C;&#x4EE3;&#x7406;&#x8981;HTTPBaseAuth&#x8BA4;&#x8BC1;<pre><code>  import requests
-  proxy = {
-      &apos;http&apos;: &apos;http://user:password@127.0.0.1:9999/&apos;
-  }
-  requests.get(&apos;https://www.baidu.com&apos;, proxies=proxy)</code></pre><ul>
-<li>socket&#x4EE3;&#x7406;<pre><code>pip install requests[socks]</code></pre></li>
-</ul>
-</li>
-<li>&#x8D85;&#x65F6;<pre><code>import requests
-response = requests.get(&apos;https://www.taobao.com&apos;, timeout=0.00001)
-print(response.status_code)</code></pre></li>
-<li><p>&#x8EAB;&#x4EFD;&#x8BA4;&#x8BC1;</p>
-<pre><code>import requests
-from requests.auth import HTTPBasicAuth
-
-response = requests.get(&apos;http://localhost:8080&apos;, auth=HTTPBasicAuth(&apos;username&apos;, &apos;password&apos;))
-print(response.text)</code></pre><ul>
-<li>OAuth<pre><code>pip install requests-oauthlib</code></pre></li>
-</ul>
-</li>
-<li>Prepared Request</li>
-</ul>
-</article></div><div style="background-color: #b4b2b2;width: 50px;height:50px;line-height: 50px;text-align: center;position: fixed;bottom: 10px;right: 10px;padding-top:5px;" onclick="document.documentElement.scrollTop = document.body.scrollTop =0;">
+if __name__ == &apos;__main__&apos;:
+    for i in range(10):
+        offset = i * 10
+        url = &apos;https://maoyan.com/board/4?offset={}&apos;.format(offset)
+        time.sleep(1)
+        content = crawl_page(url)
+        items = html_parser(content)
+        items = content_formatter(items)
+        for item in items:
+            write_to_file(item)
+</code></pre></article></div><div style="background-color: #b4b2b2;width: 50px;height:50px;line-height: 50px;text-align: center;position: fixed;bottom: 10px;right: 10px;padding-top:5px;" onclick="document.documentElement.scrollTop = document.body.scrollTop =0;">
   <svg t="1533629773982" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1035" xlink="http://www.w3.org/1999/xlink" width="40" height="40"><defs><style type="text/css">@font-face { font-family: uc-nexus-iconfont; src: url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.woff") format("woff"), url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.ttf") format("truetype"); }
   </style></defs><path d="M536.255427 195.182354c-7.804756-7.804756-17.966187-11.615549-28.311813-11.615549-9.43693 0-18.874883 3.449565-26.496467 10.163477-2.360767 1.452071-4.356214 3.267417-6.352685 5.262864L218.47792 455.611735c-15.607466 15.60542-15.607466 40.834011 0 56.43943 15.607466 15.607466 41.558511 15.607466 57.167001 0l193.46013-192.733583 0 600.526219c0 22.1423 17.787108 39.927361 39.927361 39.927361 22.140253 0 39.927361-17.785062 39.927361-39.927361L548.959773 319.317583 737.15704 508.422522c15.607466 15.607466 40.469714 15.607466 56.078203 0 15.607466-15.607466 15.425318-40.834011-0.182149-56.441477L536.255427 195.182354 536.255427 195.182354z" p-id="1036" fill="#333"/><path d="M101.784174 143.097092l816.674071 0c22.140253 0 39.925315-17.785062 39.925315-39.927361 0-22.140253-17.784038-39.925315-39.925315-39.925315L101.784174 63.244416c-22.140253 0-39.927361 17.785062-39.927361 39.925315C61.856813 125.31203 79.643921 143.097092 101.784174 143.097092L101.784174 143.097092z" p-id="1037" fill="#333"/></svg>
 </div>
