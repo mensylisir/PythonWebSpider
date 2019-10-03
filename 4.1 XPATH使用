@@ -1,0 +1,164 @@
+# Python3网络爬虫课程
+## XPATH
+[xpath](http://www.w3school.com.cn/xpath/xpath_axes.asp)
++ XPATH概览
+  - XPATH是XML路径语言，它提供了非常简洁明了的路径表达式。提供了超过100内建函数。
++ XPATH常用规则
+  - nodename  选择此节点的所有子节点
+  - /         选择当前节点的直接子节点
+  - //        选择当前节点的子孙节点
+  - \.        选择当前节点
+  - \.\.      选择当前节点的父节点
+  - @         选择属性
+  ```
+  //title[@lang='eng']
+  ```
++ 例子
+  ```
+  from lxml import etree
+
+  text = '''
+      <div>
+          <ul>
+              <li class="item1"><a href="link1.html">first item</a></li>
+              <li class="item2"><a href="link2.html">second item</a>
+              <li class="item3"><a href="link3.html">third item</a></li>
+              <li class="item4"><a href="link4.html">fourth item</a></li>
+              <li class="item5"><a href="link5.html">fivth item</a></li>
+              <li class="item6"><a href="link6.html">sixth item</a></li>
+          </ul>
+      </dv>
+  '''
+  html = etree.HTML(text)
+  result = etree.tostring(html)
+  print(result.decode('utf-8'))
+
+
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = etree.tostring(html)
+  print(result.decode('utf-8'))
+
+
+  ```
+
++ 选择节点
+  - 选择所有节点
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//*')
+  print(result)
+
+  ```
+  - 匹配指定节点
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li')
+  print(result)
+
+  ```
+  - 子节点
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li/a')
+  print(result)
+  ```
+  - 子孙节点
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//ul//a')
+  print(result)
+  ```
+  - 父节点
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//a[@href="link2.html"]/..')
+  print(result)
+
+  ```
+  - 属性匹配
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//a[@href="link2.html"]')
+  print(result)
+  ```
+  - 文本获取
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//a[@href="link2.html"]/text()')
+  print(result)
+
+
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[@class="item2"]//text()')
+  print(result)
+  ```
+  - 属性获取
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[@class="item2"]/a/@href')
+  print(result)
+  ```
+  - 属性值多值匹配
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[contains(@class, "item1")]//text()')
+  print(result)
+  ```
+  - 多属性值匹配
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[contains(@class, "item2") and @name="item2"]//text()')
+  print(result)
+  ```
+  - 按序选择
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[4]//text()')
+  result = html.xpath('//li[last()]//text()')
+  result = html.xpath('//li[last()-1]//text()')
+  result = html.xpath('//li[position()<3]//text()')
+  print(result)
+  ```
+  - 节点轴选择
+  ```
+  from lxml import etree
+
+  html = etree.parse('./test.html', etree.HTMLParser())
+  result = html.xpath('//li[1]/ancestor::*')
+  result = html.xpath('//li[1]/ancestor::div')
+  result = html.xpath('//li[1]/attribute::*')
+  result = html.xpath('//li[1]/child::*')
+  result = html.xpath('//li[1]/child::a[@href="link1.html"]')
+  result = html.xpath('//li[1]/descendant::*')
+  result = html.xpath('//li[1]/descendant::span')
+  result = html.xpath('//li[1]/following::*')
+  result = html.xpath('//li[1]/following::*[2]')
+  result = html.xpath('//li[1]/following-sibling::*')
+  print(result)
+  ```
