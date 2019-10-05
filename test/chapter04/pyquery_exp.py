@@ -1,4 +1,3 @@
-
 html = '''
     <div>
         <ul>
@@ -28,15 +27,5 @@ html = '''
 from pyquery import PyQuery as pq
 import requests
 doc = pq(html)
-li = doc('li:first-child')
-print(li)
-li = doc('li:last-child')
-print(li)
-li = doc('li:nth-child(2)')
-print(li)
-li = doc('li:gt(2)')
-print(li)
-li = doc('li:nth-child(2n)')
-print(li)
 li = doc('li:contains(sixth)')
 print(li)
