@@ -96,443 +96,97 @@ finally:
 <td>&#x6301;&#x4E45;&#x6027;(durability)</td>
 <td>&#x6301;&#x7EED;&#x6027;&#x4E5F;&#x53EB;&#x6C38;&#x4E45;&#x6027;&#xFF0C;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#x4E00;&#x65E6;&#x63D0;&#x4EA4;&#xFF0C;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6539;&#x53D8;&#x5C31;&#x662F;&#x6C38;&#x4E45;&#x7684;</td>
 </tr>
-<tr>
-<td>&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;,&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x7684;&#x6570;&#x636E;&#x662F;&#x5B57;&#x5178;&#x5F62;&#x5F0F;,&#x600E;&#x4E48;&#x63D2;&#x5165;&#x5462;?&#x5982;&#x4E0B;:  </td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>import pymysql</td>
-<td></td>
-</tr>
-<tr>
-<td>data = {</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;id&apos;: &apos;10003&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;name&apos;: &apos;Andy&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;age&apos;: 25,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;address&apos;:&apos;Beijing&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>}</td>
-<td></td>
-</tr>
-<tr>
-<td>table = &apos;person&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>keys = &apos;, &apos;.join(data.keys())</td>
-<td></td>
-</tr>
-<tr>
-<td>values = &apos;, &apos;.join([&apos;%s&apos;] * len(data))</td>
-<td></td>
-</tr>
-<tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>cursor = db.cursor()</td>
-<td></td>
-</tr>
-<tr>
-<td>sql = &apos;&apos;&apos;INSERT INTO {table}({keys}) VALUES({values})&apos;&apos;&apos; \</td>
-<td></td>
-</tr>
-<tr>
-<td>            .format(table=table, keys=keys, values=values)</td>
-<td></td>
-</tr>
-<tr>
-<td>print(sql)</td>
-<td></td>
-</tr>
-<tr>
-<td>try:</td>
-<td></td>
-</tr>
-<tr>
-<td>    cursor.execute(sql, tuple(data.values()))</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.commit()</td>
-<td></td>
-</tr>
-<tr>
-<td>except:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.rollback()</td>
-<td></td>
-</tr>
-<tr>
-<td>finally:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.close()</td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:  </td>
-<td></td>
-</tr>
-<tr>
-<td><img src="../image/mysql_dict_insert.png" alt></td>
-<td></td>
-</tr>
-<tr>
-<td>### &#x66F4;&#x65B0;&#x6570;&#x636E;</td>
-<td></td>
-</tr>
-<tr>
-<td>&#x6570;&#x636E;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#x5B9E;&#x9645;&#x4E0A;&#x4E5F;&#x662F;&#x6267;&#x884C;sql&#x8BED;&#x53E5;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;:  </td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>import pymysql</td>
-<td></td>
-</tr>
-<tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>cursor = db.cursor()</td>
-<td></td>
-</tr>
-<tr>
-<td>sql = &apos;&apos;&apos;UPDATE person SET age= %s WHERE name = %s&apos;&apos;&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>try:</td>
-<td></td>
-</tr>
-<tr>
-<td>    cursor.execute(sql, (21, &apos;Amy&apos;))</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.commit()</td>
-<td></td>
-</tr>
-<tr>
-<td>except:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.rollback()</td>
-<td></td>
-</tr>
-<tr>
-<td>finally:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.close()</td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>&#x6267;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;  </td>
-<td></td>
-</tr>
-<tr>
-<td><img src="../image/mysql_update.png" alt>  </td>
-<td></td>
-</tr>
-<tr>
-<td>&#x5B9E;&#x9645;&#x7684;&#x63D2;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;,&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;,&#x4E00;&#x822C;&#x9700;&#x8981;&#x6392;&#x9664;&#x6389;&#x91CD;&#x590D;&#x6570;&#x636E;,&#x600E;&#x4E48;&#x505A;&#x5462;?  </td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>import pymysql</td>
-<td></td>
-</tr>
-<tr>
-<td>data = {</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;id&apos;: &apos;10003&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;name&apos;: &apos;Andy&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;age&apos;: 25,</td>
-<td></td>
-</tr>
-<tr>
-<td>    &apos;address&apos;:&apos;Beijing&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>}</td>
-<td></td>
-</tr>
-<tr>
-<td>table = &apos;person&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>keys = &apos;, &apos;.join(data.keys())</td>
-<td></td>
-</tr>
-<tr>
-<td>values = &apos;, &apos;.join([&apos;%s&apos;] * len(data))</td>
-<td></td>
-</tr>
-<tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;,</td>
-<td></td>
-</tr>
-<tr>
-<td>                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>cursor = db.cursor()</td>
-<td></td>
-</tr>
-<tr>
-<td>sql = &apos;&apos;&apos;INSERT INTO {table}({keys}) VALUES({values}) ON DUPLICATE KEY UPDATE&apos;&apos;&apos; \</td>
-<td></td>
-</tr>
-<tr>
-<td>            .format(table=table, keys=keys, values=values)</td>
-<td></td>
-</tr>
-<tr>
-<td>print(sql)</td>
-<td></td>
-</tr>
-<tr>
-<td>try:</td>
-<td></td>
-</tr>
-<tr>
-<td>    cursor.execute(sql, tuple(data.values()))</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.commit()</td>
-<td></td>
-</tr>
-<tr>
-<td>except:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.rollback()</td>
-<td></td>
-</tr>
-<tr>
-<td>finally:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.close()</td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>### &#x5220;&#x9664;&#x6570;&#x636E;</td>
-<td></td>
-</tr>
-<tr>
-<td>&#x5220;&#x9664;&#x4F7F;&#x7528;DELETE&#x8BED;&#x53E5;&#x5373;&#x53EF;,&#x53EA;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8981;&#x5220;&#x9664;&#x7684;&#x76EE;&#x6807;&#x8868;&#x540D;&#x548C;&#x5220;&#x9664;&#x6761;&#x4EF6;,&#x5F53;&#x7136;,&#x5FC5;&#x987B;&#x6267;&#x884C;commit()&#x65B9;&#x6CD5;&#x540E;&#x624D;&#x80FD;&#x751F;&#x6548;  </td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>import pymysql</td>
-<td></td>
-</tr>
-<tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>cursor = db.cursor()</td>
-<td></td>
-</tr>
-<tr>
-<td>sql = &apos;&apos;&apos;DELETE FROM {table} WHERE {condition}&apos;&apos;&apos;.format(table=&apos;person&apos;, condition=&apos;age&gt;20&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>try:</td>
-<td></td>
-</tr>
-<tr>
-<td>    cursor.execute(sql)</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.commit()</td>
-<td></td>
-</tr>
-<tr>
-<td>except:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.rollback()</td>
-<td></td>
-</tr>
-<tr>
-<td>finally:</td>
-<td></td>
-</tr>
-<tr>
-<td>    db.close()</td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>### &#x67E5;&#x8BE2;&#x6570;&#x636E;</td>
-<td></td>
-</tr>
-<tr>
-<td>&#x67E5;&#x8BE2;&#x4F7F;&#x7528;SELECT&#x8BED;&#x53E5;&#x6765;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;  </td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>import pymysql</td>
-<td></td>
-</tr>
-<tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>cursor = db.cursor()</td>
-<td></td>
-</tr>
-<tr>
-<td>sql = &apos;&apos;&apos;SELECT * FROM person WHERE age&gt;=20&apos;&apos;&apos;</td>
-<td></td>
-</tr>
-<tr>
-<td>try:</td>
-<td></td>
-</tr>
-<tr>
-<td>    cursor.execute(sql)</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(&apos;Count:&apos;, cursor.rowcount)</td>
-<td></td>
-</tr>
-<tr>
-<td>    one = cursor.fetchone()</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(&apos;One:&apos;, one)</td>
-<td></td>
-</tr>
-<tr>
-<td>    results = cursor.fetchall()</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(&apos;Results:&apos;, results)</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(&quot;Results Type:&quot;, type(results))</td>
-<td></td>
-</tr>
-<tr>
-<td>    for row in results:</td>
-<td></td>
-</tr>
-<tr>
-<td>        print(row)</td>
-<td></td>
-</tr>
-<tr>
-<td>except Exception as e:</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(&apos;Error&apos;)</td>
-<td></td>
-</tr>
-<tr>
-<td>    print(e)</td>
-<td></td>
-</tr>
-<tr>
-<td><code>`</code></td>
-<td></td>
-</tr>
-<tr>
-<td>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:  </td>
-<td></td>
-</tr>
-<tr>
-<td><img src="../image/mysql_query.png" alt></td>
-<td></td>
-</tr>
 </tbody></table>
+<p>&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;,&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x7684;&#x6570;&#x636E;&#x662F;&#x5B57;&#x5178;&#x5F62;&#x5F0F;,&#x600E;&#x4E48;&#x63D2;&#x5165;&#x5462;?&#x5982;&#x4E0B;:  </p>
+<pre><code>import pymysql
+data = {
+    &apos;id&apos;: &apos;10003&apos;,
+    &apos;name&apos;: &apos;Andy&apos;,
+    &apos;age&apos;: 25,
+    &apos;address&apos;:&apos;Beijing&apos;
+}
+table = &apos;person&apos;
+keys = &apos;, &apos;.join(data.keys())
+values = &apos;, &apos;.join([&apos;%s&apos;] * len(data))
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;,
+                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
+cursor = db.cursor()
+sql = &apos;&apos;&apos;INSERT INTO {table}({keys}) VALUES({values})&apos;&apos;&apos; \
+            .format(table=table, keys=keys, values=values)
+print(sql)
+try:
+    cursor.execute(sql, tuple(data.values()))
+    db.commit()
+except:
+    db.rollback()
+finally:
+    db.close()</code></pre><p>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:<br><img src="../image/mysql_dict_insert.png" alt></p>
+<h3 id="-">&#x66F4;&#x65B0;&#x6570;&#x636E;</h3>
+<p>&#x6570;&#x636E;&#x66F4;&#x65B0;&#x64CD;&#x4F5C;&#x5B9E;&#x9645;&#x4E0A;&#x4E5F;&#x662F;&#x6267;&#x884C;sql&#x8BED;&#x53E5;&#xFF0C;&#x793A;&#x4F8B;&#x5982;&#x4E0B;:  </p>
+<pre><code>import pymysql
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
+cursor = db.cursor()
+sql = &apos;&apos;&apos;UPDATE person SET age= %s WHERE name = %s&apos;&apos;&apos;
+try:
+    cursor.execute(sql, (21, &apos;Amy&apos;))
+    db.commit()
+except:
+    db.rollback()
+finally:
+    db.close()</code></pre><p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;<br><img src="../image/mysql_update.png" alt><br>&#x5B9E;&#x9645;&#x7684;&#x63D2;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;,&#x6211;&#x4EEC;&#x63D2;&#x5165;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;,&#x4E00;&#x822C;&#x9700;&#x8981;&#x6392;&#x9664;&#x6389;&#x91CD;&#x590D;&#x6570;&#x636E;,&#x600E;&#x4E48;&#x505A;&#x5462;?  </p>
+<pre><code>import pymysql
+data = {
+    &apos;id&apos;: &apos;10003&apos;,
+    &apos;name&apos;: &apos;Andy&apos;,
+    &apos;age&apos;: 25,
+    &apos;address&apos;:&apos;Beijing&apos;
+}
+table = &apos;person&apos;
+keys = &apos;, &apos;.join(data.keys())
+values = &apos;, &apos;.join([&apos;%s&apos;] * len(data))
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;,
+                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
+cursor = db.cursor()
+sql = &apos;&apos;&apos;INSERT INTO {table}({keys}) VALUES({values}) ON DUPLICATE KEY UPDATE&apos;&apos;&apos; \
+            .format(table=table, keys=keys, values=values)
+print(sql)
+try:
+    cursor.execute(sql, tuple(data.values()))
+    db.commit()
+except:
+    db.rollback()
+finally:
+    db.close()</code></pre><h3 id="-">&#x5220;&#x9664;&#x6570;&#x636E;</h3>
+<p>&#x5220;&#x9664;&#x4F7F;&#x7528;DELETE&#x8BED;&#x53E5;&#x5373;&#x53EF;,&#x53EA;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8981;&#x5220;&#x9664;&#x7684;&#x76EE;&#x6807;&#x8868;&#x540D;&#x548C;&#x5220;&#x9664;&#x6761;&#x4EF6;,&#x5F53;&#x7136;,&#x5FC5;&#x987B;&#x6267;&#x884C;commit()&#x65B9;&#x6CD5;&#x540E;&#x624D;&#x80FD;&#x751F;&#x6548;  </p>
+<pre><code>import pymysql
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
+cursor = db.cursor()
+sql = &apos;&apos;&apos;DELETE FROM {table} WHERE {condition}&apos;&apos;&apos;.format(table=&apos;person&apos;, condition=&apos;age&gt;20&apos;)
+try:
+    cursor.execute(sql)
+    db.commit()
+except:
+    db.rollback()
+finally:
+    db.close()</code></pre><h3 id="-">&#x67E5;&#x8BE2;&#x6570;&#x636E;</h3>
+<p>&#x67E5;&#x8BE2;&#x4F7F;&#x7528;SELECT&#x8BED;&#x53E5;&#x6765;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;  </p>
+<pre><code>import pymysql
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
+cursor = db.cursor()
+sql = &apos;&apos;&apos;SELECT * FROM person WHERE age&gt;=20&apos;&apos;&apos;
+try:
+    cursor.execute(sql)
+    print(&apos;Count:&apos;, cursor.rowcount)
+    one = cursor.fetchone()
+    print(&apos;One:&apos;, one)
+    results = cursor.fetchall()
+    print(&apos;Results:&apos;, results)
+    print(&quot;Results Type:&quot;, type(results))
+    for row in results:
+        print(row)
+except Exception as e:
+    print(&apos;Error&apos;)
+    print(e)</code></pre><p>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:<br><img src="../image/mysql_query.png" alt></p>
 </article></div><div style="background-color: #b4b2b2;width: 50px;height:50px;line-height: 50px;text-align: center;position: fixed;bottom: 10px;right: 10px;padding-top:5px;" onclick="document.documentElement.scrollTop = document.body.scrollTop =0;">
   <svg t="1533629773982" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1035" xlink="http://www.w3.org/1999/xlink" width="40" height="40"><defs><style type="text/css">@font-face { font-family: uc-nexus-iconfont; src: url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.woff") format("woff"), url("chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.ttf") format("truetype"); }
   </style></defs><path d="M536.255427 195.182354c-7.804756-7.804756-17.966187-11.615549-28.311813-11.615549-9.43693 0-18.874883 3.449565-26.496467 10.163477-2.360767 1.452071-4.356214 3.267417-6.352685 5.262864L218.47792 455.611735c-15.607466 15.60542-15.607466 40.834011 0 56.43943 15.607466 15.607466 41.558511 15.607466 57.167001 0l193.46013-192.733583 0 600.526219c0 22.1423 17.787108 39.927361 39.927361 39.927361 22.140253 0 39.927361-17.785062 39.927361-39.927361L548.959773 319.317583 737.15704 508.422522c15.607466 15.607466 40.469714 15.607466 56.078203 0 15.607466-15.607466 15.425318-40.834011-0.182149-56.441477L536.255427 195.182354 536.255427 195.182354z" p-id="1036" fill="#333"/><path d="M101.784174 143.097092l816.674071 0c22.140253 0 39.925315-17.785062 39.925315-39.927361 0-22.140253-17.784038-39.925315-39.925315-39.925315L101.784174 63.244416c-22.140253 0-39.927361 17.785062-39.927361 39.925315C61.856813 125.31203 79.643921 143.097092 101.784174 143.097092L101.784174 143.097092z" p-id="1037" fill="#333"/></svg>
