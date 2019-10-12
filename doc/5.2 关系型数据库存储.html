@@ -31,7 +31,7 @@
 <p>&#x5C1D;&#x8BD5;&#x8FDE;&#x63A5;&#x4E00;&#x4E0B;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;<strong>mysql</strong>&#x8FD0;&#x884C;&#x5728;&#x672C;&#x5730;&#xFF0C;&#x6240;&#x4EE5;&#x5176;host&#x4E3A;localhost.<br>&#x540C;&#x65F6;&#x521B;&#x5EFA;person&#x6570;&#x636E;&#x5E93;</p>
 <pre><code>import pymysql
 
-db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;, port=3306)
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306)
 cursor = db.cursor()
 cursor.execute(&apos;SELECT VERSION()&apos;)
 data = cursor.fetchone()
@@ -43,7 +43,7 @@ db.close()</code></pre><p>&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:<br><
 <p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x624B;&#x52A8;&#x521B;&#x5EFA;&#x8868;,&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EE3;&#x7801;&#x6765;&#x521B;&#x5EFA;,&#x5982;&#x4E0B;:</p>
 <pre><code>import pymysql
 
-db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;,
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;,
                       port=3306, db=&apos;person&apos;)
 cursor = db.cursor()
 sql = &apos;&apos;&apos;CREATE TABLE IF NOT EXISTS
@@ -63,7 +63,7 @@ id = &apos;10001&apos;
 name = &apos;Amy&apos;
 age = 20
 address = &apos;New York&apos;
-db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)
+db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)
 cursor = db.cursor()
 sql = &apos;&apos;&apos;INSERT INTO person(id, name, age, address) VALUES(%s, %s, %s, %s)&apos;&apos;&apos;
 try:
@@ -149,7 +149,7 @@ finally:
 <td></td>
 </tr>
 <tr>
-<td>                    password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)</td>
+<td>                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
 <td></td>
 </tr>
 <tr>
@@ -225,7 +225,7 @@ finally:
 <td></td>
 </tr>
 <tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)</td>
+<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
 <td></td>
 </tr>
 <tr>
@@ -329,7 +329,7 @@ finally:
 <td></td>
 </tr>
 <tr>
-<td>                    password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)</td>
+<td>                    password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
 <td></td>
 </tr>
 <tr>
@@ -397,7 +397,7 @@ finally:
 <td></td>
 </tr>
 <tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)</td>
+<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
 <td></td>
 </tr>
 <tr>
@@ -457,7 +457,7 @@ finally:
 <td></td>
 </tr>
 <tr>
-<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;xiaoming98&apos;, port=3306, db=&apos;person&apos;)</td>
+<td>db = pymysql.connect(host=&apos;localhost&apos;, user=&apos;mensyli4&apos;, password=&apos;XXXXXXXX&apos;, port=3306, db=&apos;person&apos;)</td>
 <td></td>
 </tr>
 <tr>
