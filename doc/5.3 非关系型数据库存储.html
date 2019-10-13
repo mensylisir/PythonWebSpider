@@ -103,8 +103,7 @@ db = client.test
 collection = db[&apos;person&apos;]
 result = collection.find_one({&apos;name&apos;: &apos;Amy&apos;})
 print(result)
-print(type(result))</code></pre><p>&#x8FD9;&#x91CC;&#x67E5;&#x8BE2;name=&apos;Amy&apos;&#x7684;&#x4EBA;, &#x5176;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;&#x5B57;&#x5178;&#x7C7B;&#x578B;.<br><img src="../image/mongo_find_one.png" alt>
-&#x5982;&#x679C;&#x8981;&#x67E5;&#x8BE2;&#x591A;&#x6761;&#x7ED3;&#x679C;,&#x4F7F;&#x7528;find()&#x65B9;&#x6CD5;.  </p>
+print(type(result))</code></pre><p>&#x8FD9;&#x91CC;&#x67E5;&#x8BE2;name=&apos;Amy&apos;&#x7684;&#x4EBA;, &#x5176;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;&#x5B57;&#x5178;&#x7C7B;&#x578B;.<br><img src="../image/mongo_find_one.png" alt><br>&#x5982;&#x679C;&#x8981;&#x67E5;&#x8BE2;&#x591A;&#x6761;&#x7ED3;&#x679C;,&#x4F7F;&#x7528;find()&#x65B9;&#x6CD5;.  </p>
 <pre><code>import pymongo
 client = pymongo.MongoClient(&quot;mongodb://localhost:27017/&quot;)
 db = client.test
@@ -112,8 +111,7 @@ collection = db[&apos;person&apos;]
 results = collection.find({&apos;age&apos;: 23})
 print(results)
 for result in results:
-    print(result)</code></pre><p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:<br><img src="../image/mongo_find.png" alt>
-&#x5982;&#x679C;&#x8981;&#x8FD4;&#x56DE;&#x5E74;&#x9F84;&#x5927;&#x4E8E;20&#x7684;&#x6570;&#x636E;,&#x600E;&#x4E48;&#x5199;&#x5462;?  </p>
+    print(result)</code></pre><p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;:<br><img src="../image/mongo_find.png" alt><br>&#x5982;&#x679C;&#x8981;&#x8FD4;&#x56DE;&#x5E74;&#x9F84;&#x5927;&#x4E8E;20&#x7684;&#x6570;&#x636E;,&#x600E;&#x4E48;&#x5199;&#x5462;?  </p>
 <pre><code>collection.find({&apos;age&apos;: {&apos;$gt&apos;: 20}})</code></pre><p>$gt&#x8868;&#x793A;&#x5927;&#x4E8E;&#x53F7;&#xFF0C;&#x5176;&#x4ED6;&#x6BD4;&#x8F83;&#x7B26;&#x53F7;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;  </p>
 <table>
 <thead>
@@ -160,14 +158,53 @@ for result in results:
 </tr>
 </tbody></table>
 <p>&#x53E6;&#x5916;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6B63;&#x5219;&#x5339;&#x914D;&#xFF1A;  </p>
-<pre><code>collection.find({&apos;name&apos;: {&apos;$regex&apos;: &apos;^L.*&apos;}})</code></pre><p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7B26;&#x53F7;&#x7684;&#x8BF4;&#x660E;:<br>| &#x7B26;&#x53F7; | &#x542B;&#x4E49; | &#x793A;&#x4F8B; | &#x793A;&#x4F8B;&#x542B;&#x4E49; |
-| ----- | ----- | ----- | ----- |
-| $regex | &#x6B63;&#x5219;&#x5339;&#x914D; | {&apos;name&apos;: {&apos;$regex&apos;: &apos;^L.*&apos;}} | name&#x4EE5;L&#x5F00;&#x5934; |
-| $exists | &#x662F;&#x5426;&#x5B58;&#x5728; | {&apos;name&apos;: {&apos;$exists&apos;: True}} | name&#x5C5E;&#x6027;&#x662F;&#x5426;&#x5B58;&#x5728; |
-| $type | &#x7C7B;&#x578B;&#x5224;&#x65AD; | {&apos;age&apos;: {&apos;$type&apos;: &apos;int&apos;}} | age&#x7C7B;&#x578B;&#x4E3A;int |
-| $mod | &#x6A21;&#x64CD;&#x4F5C; | {&apos;age&apos;: {&apos;$mod&apos;: [5, 0]}} | age&#x6A21;5&#x4F59;&#x6570;&#x4E3A;0 |
-| $text | &#x6587;&#x672C;&#x67E5;&#x8BE2; | {&apos;$text&apos;: {&apos;$search&apos;: &apos;Amy&apos;}} | text&#x7C7B;&#x578B;&#x7684;&#x5C5E;&#x6027;&#x5305;&#x542B;Amy&#x5B57;&#x7B26;&#x4E32; |
-| $where | &#x9AD8;&#x7EA7;&#x6761;&#x4EF6;&#x67E5;&#x8BE2; | {&apos;$where&apos;: obj.fans_nums == obj.follows_nums} | &#x7C89;&#x4E1D;&#x6570;&#x7B49;&#x4E8E;&#x5173;&#x6CE8;&#x6570; |</p>
+<pre><code>collection.find({&apos;name&apos;: {&apos;$regex&apos;: &apos;^L.*&apos;}})</code></pre><p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7B26;&#x53F7;&#x7684;&#x8BF4;&#x660E;:</p>
+<table>
+<thead>
+<tr>
+<th>&#x7B26;&#x53F7;</th>
+<th>&#x542B;&#x4E49;</th>
+<th>&#x793A;&#x4F8B;</th>
+<th>&#x793A;&#x4F8B;&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$regex</td>
+<td>&#x6B63;&#x5219;&#x5339;&#x914D;</td>
+<td>{&apos;name&apos;: {&apos;$regex&apos;: &apos;^L.*&apos;}}</td>
+<td>name&#x4EE5;L&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td>$exists</td>
+<td>&#x662F;&#x5426;&#x5B58;&#x5728;</td>
+<td>{&apos;name&apos;: {&apos;$exists&apos;: True}}</td>
+<td>name&#x5C5E;&#x6027;&#x662F;&#x5426;&#x5B58;&#x5728;</td>
+</tr>
+<tr>
+<td>$type</td>
+<td>&#x7C7B;&#x578B;&#x5224;&#x65AD;</td>
+<td>{&apos;age&apos;: {&apos;$type&apos;: &apos;int&apos;}}</td>
+<td>age&#x7C7B;&#x578B;&#x4E3A;int</td>
+</tr>
+<tr>
+<td>$mod</td>
+<td>&#x6A21;&#x64CD;&#x4F5C;</td>
+<td>{&apos;age&apos;: {&apos;$mod&apos;: [5, 0]}}</td>
+<td>age&#x6A21;5&#x4F59;&#x6570;&#x4E3A;0</td>
+</tr>
+<tr>
+<td>$text</td>
+<td>&#x6587;&#x672C;&#x67E5;&#x8BE2;</td>
+<td>{&apos;$text&apos;: {&apos;$search&apos;: &apos;Amy&apos;}}</td>
+<td>text&#x7C7B;&#x578B;&#x7684;&#x5C5E;&#x6027;&#x5305;&#x542B;Amy&#x5B57;&#x7B26;&#x4E32;</td>
+</tr>
+<tr>
+<td>$where</td>
+<td>&#x9AD8;&#x7EA7;&#x6761;&#x4EF6;&#x67E5;&#x8BE2;</td>
+<td>{&apos;$where&apos;: obj.fans_nums == obj.follows_nums}</td>
+<td>&#x7C89;&#x4E1D;&#x6570;&#x7B49;&#x4E8E;&#x5173;&#x6CE8;&#x6570;</td>
+</tr>
+</tbody></table>
 <h3 id="-">&#x8BA1;&#x6570;</h3>
 <p>&#x8C03;&#x7528;count()&#x65B9;&#x6CD5;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x6709;&#x591A;&#x5C11;&#x6761;&#x6570;&#x636E;&#x3002;</p>
 <pre><code>collection.count_documents({})</code></pre><p>&#x5982;&#x679C;&#x7EDF;&#x8BA1;&#x7B26;&#x5408;&#x67D0;&#x6761;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x6761;&#x4EF6;&#xFF1A;  </p>
