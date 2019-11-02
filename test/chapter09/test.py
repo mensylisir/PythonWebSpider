@@ -1,3 +1,5 @@
+
+from selenium import webdriver
 import requests
 from urllib.error import URLError
 from urllib.request import ProxyHandler, build_opener
@@ -25,3 +27,10 @@ try:
     print(response.text)
 except requests.exceptions.ConnectionError as e:
     print(e.args)
+
+proxy = '127.0.0.1:7742'
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--proxy-server=http://' + proxy)
+browser = webdriver.Chrome(chrome_options=chrome_options))
+    browser.get('http://httpbin.org/get')
