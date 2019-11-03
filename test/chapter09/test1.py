@@ -1,3 +1,4 @@
+
 import requests
 from urllib import request
 import socks
@@ -29,6 +30,8 @@ except URLError as e:
     print(e)
 
 
+
+import requests
 proxy = '127.0.0.1:7742'
 proxies = {
     'http': 'http://' + proxy,
@@ -36,6 +39,32 @@ proxies = {
 }
 try:
     response = requests.get('http://httpbin.org/get', proxies=proxies)
+    print(response.text)
+except requests.exceptions.ConnectionError as e:
+    print(e)
+
+
+import requests
+proxy = '127.0.0.1:7742'
+proxies = {
+    'http': 'socks5://' + proxy,
+    'https': 'socks5://' + proxy
+}
+try:
+    response = requests.get('http://httpbin.org/get', proxies=proxies)
+    print(response.text)
+except requests.exceptions.ConnectionError as e:
+    print(e)
+
+
+import requests
+import socks
+import socket
+socks.setdefaultproxy(socks.SOCKS5, '127.0.0.1', '7453')
+socket.socket = socks.socksocket
+
+try:
+    response = requests.get('http://httpbin.org/get')
     print(response.text)
 except requests.exceptions.ConnectionError as e:
     print(e)
