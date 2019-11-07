@@ -426,30 +426,46 @@ sudo apt install lamp-server^
 1. install httpd
 // We will be installing Apache with dnf, which is the default package manager for CentOS 8:
 sudo dnf install httpd
+
 // After installing Apache services on your system, start all required services:
 systemctl restart httpd
 systemctl status httpd
 systemctl enable httpd
+
+// view zone
+(base) [mensyli4@localhost ~]$ sudo firewall-cmd --get-active-zones
+FedoraServer
+  interfaces: ens33
+base) [mensyli4@localhost ~]$ sudo firewall-cmd --get-zone-of-interface=ens33
+FedoraServer
+
 // Then, allow Apache HTTP server via the firewall:
-firewall-cmd --add-port=80/tcp --zone=public --permanent
-firewall-cmd --add-port=443/tcp --zone=public --permanent
+firewall-cmd --add-port=80/tcp --zone=FedoraServer --permanent
+firewall-cmd --add-port=443/tcp --zone=FedoraServer --permanent
 firewall-cmd --reload
+
 2. install MariaDB
 // MariaDB is a drop in replacement for MySQL. It is a robust, scalable and reliable SQL server that comes rich set of enhancements. We will also be using yum to install MariaDB:
 sudo dnf install mariadb-server
+
 // By default, MariaDB is not hardened. You can secure MariaDB using the mysql_secure_installation script. you should read and below each steps carefully which will set root password, remove anonymous users, disallow remote root login, and remove the test database and access to secure MariaDB:
 mysql_secure_installation
+
 // To log into MariaDB, use the following command (note that it’s the same command you would use to log into a MariaDB database):
 mysql -u root -p
+
 // Then, restart the MariaDB database server and enable it to start on system start-up using:
 systemctl restart mariadb
 systemctl status mariadb
 systemctl enable mariadb
+
 3. install PHP
 // Finally, run the commands below to install PHP along with other good-to-have modules:
 sudo dnf install php php-common php-pecl-apcu php-cli php-pear php-pdo php-mysqlnd php-pgsql php-gd php-mbstring php-xml
+
 // Restart Apache using systemctl for the changes to take effect:
 sudo systemctl restart httpd
+
 // Now, it is time to test it. Create a new file called test.php on /var/www/html and add the following:
 sudo nano /var/www/html/test.php
 <?php
