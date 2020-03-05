@@ -541,3 +541,15 @@ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 将 bind-address = 127.0.0.1
 修改为 bind-address = 0.0.0.0
 ```
+
+#### 其他问题
+1. ubuntu提示error while loading shared libraries: libX11-xcb.so.1: cannot open shared object file: No such file or directory
+```
+sudo apt-get install libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libgconf2-4 libasound2 libatk1.0-0 libgtk-3-0
+sudo apt-get install libxdamage1 libgtk-3-0 libasound2 libnss3 libxss1 -y
+```
+
+2. CentOS提示error while loading shared libraries: libX11-xcb.so.1: cannot open shared object file: No such file or directory
+```
+yum install libXScrnSaver
+```
