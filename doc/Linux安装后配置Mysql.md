@@ -553,3 +553,39 @@ sudo apt-get install libxdamage1 libgtk-3-0 libasound2 libnss3 libxss1 -y
 ```
 yum install libXScrnSaver
 ```
+
+#### Fedora安装MySQL8.0
+1. 更新
+```
+sudo dnf update
+```
+2. 添加源
+```
+[mysql80-community]
+name=MySQL 8.0 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-8.0-community/fc/$releasever/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+```
+3. 安装
+```
+sudo dnf install mysql-community-server
+```
+4. 启用
+```
+sudo systemctl enable mysqld.service
+sudo systemctl start mysqld.service
+```
+5. 安装后操作
+```
+grep 'A temporary password is generated' /var/log/mysqld.log | tail -1
+
+2018-10-16T11:49:31.216147Z 1 [Note] A temporary password is generated for root@localhost: ,yJrusM58kW7
+
+sudo mysql_secure_installation
+```
+6. 链接
+```
+mysql -u root -p
+```
